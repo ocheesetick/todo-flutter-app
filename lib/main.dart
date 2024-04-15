@@ -1,8 +1,11 @@
+// ignore_for_file: must_be_immutable, prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:todo/pages/first_page.dart';
+import 'package:todo/pages/second_page.dart';
 
 void main() {
-  runApp(const MyApp()); 
+  runApp(MyApp()); 
 }
 
 class MyApp extends StatelessWidget {
@@ -10,9 +13,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: FirstPage(),
+      routes: {
+        '/firstpage': (context) => FirstPage(),
+        '/secondpage': (context) => SecondPage()
+      },
     );
   }
 }
