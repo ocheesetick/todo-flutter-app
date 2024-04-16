@@ -10,6 +10,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final _controller = TextEditingController();
+
   List toDoList = [
     ["Study flutter", false],
     ["Make small app", false]
@@ -22,14 +24,42 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  // Save new task
+  void saveNewTask() {
+    setState(() {
+      toDoList.add([_controller.text, false]);
+      _controller.clear();
+    });
+    Navigator.of(context).pop();
+  }
+
+  // Cancel add task
+  void cancelNewTask() {
+    setState(() {
+      _controller.clear();
+    });
+    Navigator.of(context).pop();
+  }
+
   // New Task
   void createTask() {
     showDialog(
       context: context, 
       builder: (context) {
-        return DialogBox();
+        return DialogBox(
+          controller: _controller,
+          onSave: saveNewTask,
+          onCancel: cancelNewTask,
+        );
       }
     );
+  }
+
+  // Delete task
+  void onDelete(int index) {
+    setState(() {
+      toDoList.removeAt(index);
+    });
   }
 
   @override
@@ -37,7 +67,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: Colors.yellow[200],
       appBar: AppBar(
-        title: Text("To Do"),
+        title: const Text("To Do"),
         centerTitle: true,
         elevation: 0,
         backgroundColor: Colors.yellow,
@@ -45,8 +75,8 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: FloatingActionButton( 
         onPressed: createTask,
         backgroundColor: Colors.yellow,
-        shape: CircleBorder(eccentricity: 0),
-        child: Icon(Icons.add),
+        shape: const CircleBorder(eccentricity: 0),
+        child: const Icon(Icons.add),
       ),
       body: ListView.builder(
         itemCount: toDoList.length,
@@ -55,6 +85,7 @@ class _HomePageState extends State<HomePage> {
             taskName: toDoList[index][0],
             taskCompleted: toDoList[index][1],
             onChanged: (value) => checkBoxChanged(value, index),
+            onDelete:(context) => onDelete(index),
           );
         },
       )
