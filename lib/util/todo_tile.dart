@@ -27,11 +27,16 @@ class ToDoTile extends StatelessWidget {
               onPressed: onDelete,
               icon: Icons.delete,
               backgroundColor: Colors.red.shade300,
+              borderRadius: BorderRadius.circular(12),
             )
           ],
         ),
         child: Container(
           padding: EdgeInsets.all(24),
+          decoration: BoxDecoration(
+              color: Colors.yellow, 
+              borderRadius: BorderRadius.circular(12)
+          ),
           child: Row(
             children: [
               // Checkbox
@@ -48,10 +53,6 @@ class ToDoTile extends StatelessWidget {
                 ),
               ),
             ],
-          ),
-          decoration: BoxDecoration(
-            color: Colors.yellow,
-            borderRadius: BorderRadius.circular(12)
           ),
         ),
       ),
